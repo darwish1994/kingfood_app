@@ -3,7 +3,7 @@ package com.example.kingfood.presnter.auth
 import android.view.View
 import androidx.navigation.fragment.findNavController
 import com.example.kingfood.databinding.FragmentLoginBinding
-import com.example.kingfood.presnter.base.BaseFragment
+import com.example.kingfood.utils.base.BaseFragment
 
 
 class LoginFragment : BaseFragment<FragmentLoginBinding>(), View.OnClickListener {

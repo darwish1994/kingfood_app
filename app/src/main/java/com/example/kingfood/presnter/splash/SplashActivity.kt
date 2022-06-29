@@ -5,7 +5,7 @@ import android.os.Handler
 import android.os.Looper
 import com.example.kingfood.databinding.ActivitySplashBinding
 import com.example.kingfood.presnter.auth.AuthActivity
-import com.example.kingfood.presnter.base.BaseActivity
+import com.example.kingfood.utils.base.BaseActivity
 
 class SplashActivity : BaseActivity<ActivitySplashBinding>() {
 

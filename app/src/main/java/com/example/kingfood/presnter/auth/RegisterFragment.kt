@@ -1,7 +1,7 @@
 package com.example.kingfood.presnter.auth
 
 import com.example.kingfood.databinding.FragmentRegisterBinding
-import com.example.kingfood.presnter.base.BaseFragment
+import com.example.kingfood.utils.base.BaseFragment
 
 
 class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
