@@ -42,7 +42,7 @@ class SplashActivity : BaseActivityMVVM<ActivitySplashBinding, SplashViewModel>(
     override fun initObservables() {
         MainScope().launch {
             delay(1200)
-            val hasUser= getViewModel().getCurrentUser().isEmpty()
+            val hasUser= getViewModel().getCurrentUser().value.isNullOrEmpty()
 
             if (hasUser)
                 startActivity(Intent(this@SplashActivity, AuthActivity::class.java))

@@ -7,6 +7,7 @@ import com.example.kingfood.databinding.DialogLoadingBinding
 import com.example.kingfood.utils.DialogUtil
 
 abstract class BaseFragmentMVVM<VB : ViewBinding, VM : BaseViewModel> : BaseFragment<VB>() {
+
     protected lateinit var viewModel: Lazy<VM>
 
     private val dialog by lazy {
@@ -22,6 +23,8 @@ abstract class BaseFragmentMVVM<VB : ViewBinding, VM : BaseViewModel> : BaseFrag
         viewModel = initViewModel()
         onCreateInit()
     }
+
+
 
 
     fun showLoading(){

@@ -8,9 +8,12 @@ interface ProductRepo {
 
     suspend fun getAllProducts():ResponseWrapper<List<Product>>
 
-
     suspend fun getOffers():ResponseWrapper<List<Offer>>
 
     suspend fun getHomeOffers():ResponseWrapper<List<Offer>>
+
+
+
+
 
 }

@@ -1,5 +1,6 @@
 package com.example.kingfood.data.local
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -11,7 +12,7 @@ interface UserDao {
 
 
     @Query("SELECT * FROM User")
-    suspend fun getUser(): List<User>
+    fun getUser(): LiveData<List<User>>
 
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

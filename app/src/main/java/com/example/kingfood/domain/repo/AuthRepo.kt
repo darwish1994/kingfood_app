@@ -18,7 +18,7 @@ interface AuthRepo {
 
     suspend fun saveUser(user: User)
 
-  suspend  fun getUser():List<User>
+    fun getUser(): LiveData<List<User>>
 
 
 }

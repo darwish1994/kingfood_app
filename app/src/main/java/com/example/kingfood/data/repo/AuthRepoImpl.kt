@@ -37,7 +37,7 @@ class AuthRepoImpl @Inject constructor(private val authApi: AuthApi, private val
         userDao.insertUser(user)
     }
 
-     override suspend fun getUser(): List<User> = userDao.getUser()
+     override  fun getUser(): LiveData<List<User>> = userDao.getUser()
 
 
 }

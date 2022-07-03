@@ -13,7 +13,7 @@ data class User(
     val avatar: String,
     @SerializedName("email")
     val email: String,
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = false)
     @SerializedName("id")
     val id: Int,
     @SerializedName("name")
@@ -24,4 +24,4 @@ data class User(
     val roleId: Int,
 
 
-)
+    )

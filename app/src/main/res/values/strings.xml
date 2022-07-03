@@ -14,4 +14,9 @@
     <string name="password_error">please enter password</string>
     <string name="required">Required</string>
     <string name="phone_error">enter valid Phone</string>
+    <string name="home">Home</string>
+    <string name="offer">offer</string>
+    <string name="order">Order</string>
+    <string name="cart">Cart</string>
+    <string name="go_menu">Go Menu</string>
 </resources>
