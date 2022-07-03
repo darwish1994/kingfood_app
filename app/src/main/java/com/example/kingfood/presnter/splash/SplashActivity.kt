@@ -4,10 +4,17 @@ import android.content.Intent
 import android.os.Handler
 import android.os.Looper
 import com.example.kingfood.databinding.ActivitySplashBinding
+import com.example.kingfood.presnter.MainActivity
 import com.example.kingfood.presnter.auth.AuthActivity
 import com.example.kingfood.utils.base.BaseActivity
+import com.example.kingfood.utils.base.BaseActivityMVVM
+import com.example.kingfood.utils.base.BaseViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.*
+import java.lang.Runnable
 
-class SplashActivity : BaseActivity<ActivitySplashBinding>() {
+@AndroidEntryPoint
+class SplashActivity : BaseActivityMVVM<ActivitySplashBinding, SplashViewModel>() {
 
     override fun getViewBinding(): ActivitySplashBinding =
         ActivitySplashBinding.inflate(layoutInflater)
@@ -15,14 +22,11 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
     private val handler by lazy { Handler(Looper.getMainLooper()) }
     private val runable by lazy {
         Runnable {
-            startActivity(Intent(this, AuthActivity::class.java))
-            finish()
+
         }
     }
 
     override fun initOnCreate() {
-
-        handler.postDelayed(runable, (1.3 * 1000).toLong())
 
     }
 
@@ -30,5 +34,21 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
         super.onDestroy()
         handler.removeCallbacks(runable)
 
+    }
+
+    override fun getViewModelClass(): Class<out BaseViewModel> = SplashViewModel::class.java
+
+
+    override fun initObservables() {
+        MainScope().launch {
+            delay(1200)
+            val hasUser= getViewModel().getCurrentUser().isEmpty()
+
+            if (hasUser)
+                startActivity(Intent(this@SplashActivity, AuthActivity::class.java))
+            else
+                startActivity(Intent(this@SplashActivity, MainActivity::class.java))
+            finish()
+        }
     }
 }

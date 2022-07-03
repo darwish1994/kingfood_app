@@ -10,4 +10,8 @@
     <string name="name">Name</string>
     <string name="address">Address</string>
     <string name="have_account">Have an acoount.</string>
+    <string name="email_error">please enter a valid email</string>
+    <string name="password_error">please enter password</string>
+    <string name="required">Required</string>
+    <string name="phone_error">enter valid Phone</string>
 </resources>
