@@ -72,7 +72,7 @@ class RegisterFragment : BaseFragmentMVVM<FragmentRegisterBinding, AuthViewModel
             binding.loginBtn.id -> if (!findNavController().popBackStack())
                 activity?.finish()
 
-            binding.registerBtn.id -> {}
+            binding.registerBtn.id -> register()
         }
     }
 
