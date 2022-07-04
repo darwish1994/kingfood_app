@@ -8,7 +8,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SplashViewModel @Inject constructor(private val userUseCase: UserUseCase) : BaseViewModel() {
 
-     fun getCurrentUser()=userUseCase.invoke()
+     suspend fun getCurrentUser()=userUseCase.invoke()
 
 
 

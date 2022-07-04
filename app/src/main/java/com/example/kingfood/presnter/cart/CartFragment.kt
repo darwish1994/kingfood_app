@@ -1,60 +1,100 @@
 package com.example.kingfood.presnter.cart
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import com.example.kingfood.R
+import androidx.fragment.app.viewModels
+import com.example.kingfood.databinding.FragmentCartBinding
+import com.example.kingfood.domain.model.CartItem
+import com.example.kingfood.presnter.cart.list.CartAdapter
+import com.example.kingfood.presnter.home.HomeViewModel
+import com.example.kingfood.utils.CartCallBack
+import com.example.kingfood.utils.Resource
+import com.example.kingfood.utils.ResponseWrapper
+import com.example.kingfood.utils.base.BaseFragmentMVVM
+import com.example.kingfood.utils.observe
+import dagger.hilt.android.AndroidEntryPoint
+import es.dmoral.toasty.Toasty
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+@AndroidEntryPoint
+class CartFragment : BaseFragmentMVVM<FragmentCartBinding, HomeViewModel>(), CartCallBack {
 
-/**
- * A simple [Fragment] subclass.
- * Use the [CartFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class CartFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private val adapter by lazy { CartAdapter() }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    override fun getViewBinding(): FragmentCartBinding = FragmentCartBinding.inflate(layoutInflater)
+
+    override fun initListener() {
+        binding.submitBtn.setOnClickListener {
+            if (adapter.itemCount == 0) {
+                Toasty.error(requireActivity(), "cart is Empty").show()
+                return@setOnClickListener
+            }
+
+            getInitViewModel().createOrder()
         }
+        binding.cartRec.adapter = adapter
+        adapter.listener = this
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_cart, container, false)
+    override fun removeListener() {
+        binding.cartRec.adapter = null
+        adapter.listener = null
+
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment CartFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            CartFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun initViewModel(): Lazy<HomeViewModel> = viewModels()
+
+    override fun onCreateInit() {
+        if (!getInitViewModel().cartLiveData.hasActiveObservers())
+            observe(getInitViewModel().cartLiveData, ::cartObserver)
+
+        if (!getInitViewModel().orderLiveData.hasActiveObservers())
+            observe(getInitViewModel().orderLiveData, ::orderObserver)
+
+        getInitViewModel().getCart()
+    }
+
+
+    override fun onClick(cartItem: CartItem) {
+        getInitViewModel().removeFromCart(cartItem.id)
+    }
+
+
+    private fun cartObserver(it: Resource<ResponseWrapper<List<CartItem>>>?) {
+        it?.let {
+            when (it) {
+
+                is Resource.Loading -> showLoading()
+                is Resource.Success -> {
+                    dismissLoading()
+                    it.data?.data?.let { it1 -> adapter.update(it1) }
+
+                }
+                is Resource.Error -> {
+                    dismissLoading()
+                    Toasty.error(requireActivity(), it.message ?: "Something went wrong").show()
                 }
             }
+        }
+
     }
+
+    private fun orderObserver(it: Resource<ResponseWrapper<String>>?) {
+        it?.let {
+            when (it) {
+
+                is Resource.Loading -> showLoading()
+                is Resource.Success -> {
+                    dismissLoading()
+                    Toasty.success(requireActivity(), it.message ?: "Order Created").show()
+                    getInitViewModel().getCart()
+                }
+                is Resource.Error -> {
+                    dismissLoading()
+                    Toasty.error(requireActivity(), it.message ?: "Something went wrong").show()
+                }
+            }
+        }
+
+    }
+
+
 }

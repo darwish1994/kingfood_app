@@ -1,6 +1,7 @@
 package com.example.kingfood.presnter.home
 
 import androidx.fragment.app.viewModels
+import com.example.kingfood.R
 import com.example.kingfood.data.remote.response.HomeSection
 import com.example.kingfood.databinding.FragmentHomeBinding
 import com.example.kingfood.presnter.home.list.OfferAdapter
@@ -11,6 +12,7 @@ import com.example.kingfood.utils.base.BaseFragment
 import com.example.kingfood.utils.base.BaseFragmentMVVM
 import com.example.kingfood.utils.observe
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.runBlocking
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
@@ -25,9 +27,16 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
     override fun initViewModel(): Lazy<HomeViewModel> = viewModels()
 
     override fun onCreateInit() {
-        getInitViewModel().getHome()
 
-        observe(getInitViewModel().homeLiveData,::homeObserver)
+
+        runBlocking {
+            getInitViewModel().getUserData().firstOrNull()?.let {
+                binding.header.text = getString(R.string.wellcome_header, it.name)
+            }
+        }
+
+        getInitViewModel().getHome()
+        observe(getInitViewModel().homeLiveData, ::homeObserver)
 
 
     }

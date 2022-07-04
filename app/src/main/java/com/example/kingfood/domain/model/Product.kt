@@ -13,5 +13,7 @@ data class Product(
     val name: String,
     @SerializedName("price")
     val price: Int,
+    @SerializedName("quantity")
+    var quantity: Int = 0
 
 )

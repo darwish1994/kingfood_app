@@ -17,11 +17,14 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideDatabase(@ApplicationContext context: Context) = Room.databaseBuilder(context, AppDatabase::class.java, "kingfoodDatabase").build()
+    fun provideDatabase(@ApplicationContext context: Context):AppDatabase
+    = Room.databaseBuilder(context, AppDatabase::class.java, "kingfoodDatabase").build()
 
     @Provides
     @Singleton
     fun provideCityDao(database: AppDatabase): UserDao =  database.userDao()
+
+
 
 
 }

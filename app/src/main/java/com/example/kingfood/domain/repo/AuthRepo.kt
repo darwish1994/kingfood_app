@@ -1,6 +1,5 @@
 package com.example.kingfood.domain.repo
 
-import androidx.lifecycle.LiveData
 import com.example.kingfood.domain.model.User
 import com.example.kingfood.utils.ResponseWrapper
 
@@ -18,7 +17,7 @@ interface AuthRepo {
 
     suspend fun saveUser(user: User)
 
-    fun getUser(): LiveData<List<User>>
+   suspend fun getUser(): List<User>
 
 
 }

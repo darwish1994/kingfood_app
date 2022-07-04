@@ -7,9 +7,9 @@
         android:title="@string/home" />
 
     <item
-        android:id="@+id/offerFragment"
+        android:id="@+id/productsFragment"
         android:icon="@drawable/ic_offer"
-        android:title="@string/offer" />
+        android:title="@string/menu" />
 
     <item
         android:id="@+id/cartFragment"

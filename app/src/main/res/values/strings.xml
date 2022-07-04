@@ -19,4 +19,11 @@
     <string name="order">Order</string>
     <string name="cart">Cart</string>
     <string name="go_menu">Go Menu</string>
+    <string name="wellcome_header">Wellcome \n %s</string>
+    <string name="menu">Menu</string>
+    <string name="retry">Retry</string>
+    <string name="add_to_cart">Add To Cart</string>
+    <string name="prodcut">Product</string>
+    <string name="create_order">Create Order</string>
+    <string name="remove">Remove</string>
 </resources>

@@ -12,6 +12,7 @@
         android:name=".utils.base.BaseApplication"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:usesCleartextTraffic="true"
         android:theme="@style/Theme.Kingfood"
         tools:targetApi="31">
         <activity

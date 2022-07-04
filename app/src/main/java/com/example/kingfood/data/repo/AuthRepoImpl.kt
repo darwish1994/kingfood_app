@@ -1,6 +1,5 @@
 package com.example.kingfood.data.repo
 
-import androidx.lifecycle.LiveData
 import com.example.kingfood.data.local.UserDao
 import com.example.kingfood.data.remote.call.AuthApi
 import com.example.kingfood.data.remote.request.LoginRequest
@@ -37,7 +36,7 @@ class AuthRepoImpl @Inject constructor(private val authApi: AuthApi, private val
         userDao.insertUser(user)
     }
 
-     override  fun getUser(): LiveData<List<User>> = userDao.getUser()
+    override suspend fun getUser(): List<User> = userDao.getUser()
 
 
 }
